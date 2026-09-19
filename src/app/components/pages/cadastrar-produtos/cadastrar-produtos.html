@@ -1,27 +1,27 @@
-<h4>Cadastro de Produtos</h4>
-<p>Preencha os campos abaixo para cadastrar um novo produto.</p>
+<h4>Cadastro de produtos</h4>
+<p>Preencha os campos para incluir um produto.</p>
 <hr/>
 
-<form>
+<form [formGroup]="formulario" (ngSubmit)="cadastrar()">
 
     <div class="mb-3">
         <label>Nome do produto:</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" formControlName="nome"/>
     </div>
 
     <div class="mb-3">
         <label>Preço:</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" formControlName="preco"/>
     </div>
 
     <div class="mb-3">
         <label>Quantidade:</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" formControlName="quantidade"/>
     </div>
 
     <div class="mb-3">
         <label>Tipo:</label>
-        <select class="form-select">
+        <select class="form-select" formControlName="tipo">
             <option value="">Escolha uma opção</option>
             <option value="1">Físico</option>
             <option value="2">Digital</option>
@@ -31,14 +31,18 @@
 
     <div class="mb-3">
         <label>Categoria:</label>
-        <select class="form-select">
+        <select class="form-select" formControlName="categoria_id">
             <option value="">Escolha uma opção</option>
+            @for(c of categorias(); track c) {
+                <option value="{{ c.id }}">
+                    {{ c.nome }}
+                </option>
+            }
         </select>
-    </div> 
-    
+    </div>
+
     <div class="mb-3">
         <input type="submit" class="btn btn-success shadow" 
             value="Realizar cadastro"/>
-    </div>   
-
+    </div>
 </form>
