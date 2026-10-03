@@ -1,10 +1,12 @@
 <h4>Consulta de produtos</h4>
 <p>Preencha o nome do produto desejado para realizar a consulta.</p>
 
-<form>
+<form [formGroup]="formulario" (ngSubmit)="consultar()">
     <div class="row mb-3">
         <div class="col-md-6">
             <input type="text" class="form-control"
+                formControlName="nome"
+                [disabled]="formulario.invalid"
                 placeholder="Digite o nome do produto desejado"/>
         </div>
         <div class="col-md-6">
