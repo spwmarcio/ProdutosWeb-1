@@ -1,8 +1,8 @@
-<h4>Cadastro de produtos</h4>
-<p>Preencha os campos para incluir um produto.</p>
+<h4>Edição de produtos</h4>
+<p>Preencha os campos para alterar um produto.</p>
 <hr/>
 
-<form [formGroup]="formulario" (ngSubmit)="cadastrar()">
+<form [formGroup]="formulario" (ngSubmit)="atualizar()">
 
     <div class="mb-3">
         <label>Nome do produto:</label>
@@ -42,9 +42,9 @@
     </div>
 
     <div class="mb-3">
-        <input type="submit" class="btn btn-success shadow"
+        <input type="submit" class="btn btn-primary shadow" 
             [disabled]="formulario.invalid"
-            value="Realizar cadastro"/>
+            value="Salvar alterações"/>
     </div>
 
 </form>

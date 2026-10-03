@@ -6,11 +6,11 @@
         <div class="col-md-6">
             <input type="text" class="form-control"
                 formControlName="nome"
-                [disabled]="formulario.invalid"
                 placeholder="Digite o nome do produto desejado"/>
         </div>
         <div class="col-md-6">
             <input type="submit" class="btn btn-success shadow"
+                [disabled]="formulario.invalid"
                 value="Realizar pesquisa"/>
         </div>
     </div>
@@ -30,12 +30,38 @@
         </tr>
     </thead>
     <tbody>
-
+        @for(p of produtos(); track p) {
+            <tr>
+                <td>{{ p.nome | uppercase }}</td>
+                <td>{{ p.preco | currency : 'R$ '}}</td>
+                <td>{{ p.quantidade }}</td>
+                <td>
+                    @if(p.tipo == 1) {
+                        <span class="badge bg-primary">Físico</span>
+                    }           
+                    @else if(p.tipo == 2) {
+                        <span class="badge bg-success">Digital</span>
+                    }        
+                    @else if(p.tipo == 3) {
+                        <span class="badge bg-warning">Serviço</span>
+                    }        
+                </td>
+                <td>{{ p.categoria.nome }}</td>
+                <td>
+                    <button (click)="editar(p.id)" class="btn btn-sm btn-outline-primary me-1">
+                        Editar
+                    </button>
+                    <button (click)="excluir(p.id)" class="btn btn-sm btn-outline-danger">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        }
     </tbody>
     <tfoot>
         <tr>
             <td colspan="6">
-                Quantidade de produtos encontrados: 0
+                Quantidade de produtos encontrados: {{ produtos().length }}
             </td>
         </tr>
     </tfoot>

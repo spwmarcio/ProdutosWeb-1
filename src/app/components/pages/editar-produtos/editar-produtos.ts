@@ -1,22 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  selector: 'app-cadastrar-produtos',
-  styleUrl: './cadastrar-produtos.css',
-  templateUrl: './cadastrar-produtos.html',
+  selector: 'app-editar-produtos',
+  styleUrl: './editar-produtos.css',
+  templateUrl: './editar-produtos.html',
 })
-export class CadastrarProdutos {
+export class EditarProdutos {
 
-  //Atributo
+    //Atributo
   private apiUrl = environment.apiUrl;
 
   //injeção de dependência
@@ -24,6 +25,12 @@ export class CadastrarProdutos {
 
   //variável para armazenar as categorias obtidas da API
   categorias = signal<any[]>([]);
+
+  //Armazenar o id do produto a ser editado
+  id = '';
+
+  //Biblioteca para capturar o ID enviado na URL
+  private route = inject(ActivatedRoute);
 
   //estrutura do formulário
   formulario = new FormGroup({
@@ -36,6 +43,23 @@ export class CadastrarProdutos {
 
   //Método executado quando o componente é inicializado
   ngOnInit() {
+
+    //capturando o ID enviado na URL
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+
+    //Fazendo uma requisição para a API
+    this.http.get(this.apiUrl + '/produtos/' + this.id)
+      .subscribe((data: any) => {
+        //preenchendo o formulário com os dados obtidos da API
+        this.formulario.patchValue({
+          nome: data.nome,
+          preco: data.preco,
+          quantidade: data.quantidade,
+          tipo: data.tipo,
+          categoria_id: data.categoria.id
+        });
+      });
+
     //Fazendo uma requisição para a API
     this.http.get(this.apiUrl + '/categorias')
       .subscribe((data) => {
@@ -45,12 +69,11 @@ export class CadastrarProdutos {
   }
 
   //Método executado pelo formulário (SUBMIT)
-  cadastrar() {
+  atualizar() {
     //Fazendo uma requisição para a API
-    this.http.post(this.apiUrl + '/produtos', this.formulario.value)
+    this.http.patch(this.apiUrl + '/produtos/' + this.id, this.formulario.value)
       .subscribe((data: any) => {
         alert(data.mensagem);
-        this.formulario.reset();
       })
   }
 
