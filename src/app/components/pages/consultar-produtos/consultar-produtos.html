@@ -1,1 +1,40 @@
-<p>consultar-produtos works!</p>
+<h4>Consulta de produtos</h4>
+<p>Preencha o nome do produto desejado para realizar a consulta.</p>
+
+<form>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" class="form-control"
+                placeholder="Digite o nome do produto desejado"/>
+        </div>
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-success shadow"
+                value="Realizar pesquisa"/>
+        </div>
+    </div>
+</form>
+
+<hr/>
+
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Nome do produto</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Tipo</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">
+                Quantidade de produtos encontrados: 0
+            </td>
+        </tr>
+    </tfoot>
+</table>
